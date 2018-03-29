@@ -27,15 +27,15 @@
 ;; emacs package management
 ;; use MELPA stable
 (require 'package)
-
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
-
-;; keep the installed packages in .emacs.d
-(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
-;; update the package metadata is the local cache is missing
+
+
+
+
 (unless package-archive-contents
   (package-refresh-contents))
 
@@ -70,9 +70,13 @@ re-downloaded in order to locate PACKAGE."
 
 
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
+(eval-when-compile
+  (require 'use-package))
+
+
 (setq use-package-verbose t)
 
 
@@ -182,7 +186,9 @@ re-downloaded in order to locate PACKAGE."
   (helm-projectile-on))
 
 (use-package rainbow-delimiters
-  :ensure t)
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package rainbow-mode
   :ensure t
@@ -202,12 +208,12 @@ re-downloaded in order to locate PACKAGE."
 
 (global-linum-mode t)
 
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
 ;; Allow hash to be entered  
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 ;; Theme
 (load-file "~/.emacs.d/themes/dracula2-theme.el")
-;;(dracula2)
+;;(dracula2);
 
 ;; show opening, closing parens
 (show-paren-mode)
