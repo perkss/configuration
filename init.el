@@ -206,6 +206,9 @@ re-downloaded in order to locate PACKAGE."
 (use-package ag
   :ensure t)
 
+(use-package kibit-helper
+  :ensure t)
+
 (global-linum-mode t)
 
 
@@ -300,7 +303,7 @@ re-downloaded in order to locate PACKAGE."
     ("138d69908243e827e869330c43e7abc0f70f334dfa90a589e4d8a1f98a1e29af" default)))
  '(package-selected-packages
    (quote
-    (json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell))))
+    (kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -316,4 +319,7 @@ re-downloaded in order to locate PACKAGE."
  kept-new-versions 6
  kept-old-versions 2
  version-control t)       ; use versioned backups
+
+ (setq backup-directory-alist
+          `(("." . ,(concat user-emacs-directory "backups"))))
 
