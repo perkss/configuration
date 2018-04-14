@@ -34,7 +34,11 @@
 (package-initialize)
 
 
+(defconst bozhidar-savefile-dir (expand-file-name "savefile" user-emacs-directory))
 
+;; create the savefile dir if it doesn't exist
+(unless (file-exists-p bozhidar-savefile-dir)
+  (make-directory bozhidar-savefile-dir))
 
 (unless package-archive-contents
   (package-refresh-contents))
@@ -135,6 +139,60 @@ re-downloaded in order to locate PACKAGE."
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   (global-set-key (kbd "<f6>") 'ivy-resume))
 
+(use-package savehist
+  :config
+  (setq savehist-additional-variables
+        ;; search entries
+        '(search-ring regexp-search-ring)
+        ;; save every minute
+        savehist-autosave-interval 60
+        ;; keep the home clean
+        savehist-file (expand-file-name "savehist" bozhidar-savefile-dir))
+  (savehist-mode +1))
+
+(use-package recentf
+  :config
+  (setq recentf-save-file (expand-file-name "recentf" bozhidar-savefile-dir)
+        recentf-max-saved-items 500
+        recentf-max-menu-items 15
+        ;; disable recentf-cleanup on Emacs start, because it can cause
+        ;; problems with remote files
+        recentf-auto-cleanup 'never)
+  (recentf-mode +1))
+
+(use-package anzu
+  :ensure t
+  :bind (("M-%" . anzu-query-replace)
+         ("C-M-%" . anzu-query-replace-regexp))
+  :config
+  (global-anzu-mode))
+
+(use-package move-text
+  :ensure t
+  :bind
+  (([(meta shift up)] . move-text-up)
+   ([(meta shift down)] . move-text-down)))
+
+(use-package whitespace
+  :init
+  (dolist (hook '(prog-mode-hook text-mode-hook))
+    (add-hook hook #'whitespace-mode))
+  (add-hook 'before-save-hook #'whitespace-cleanup)
+  :config
+  (setq whitespace-line-column 80) ;; limit line length
+  (setq whitespace-style '(face tabs empty trailing lines-tail)))
+
+
+(use-package inf-ruby
+  :ensure t
+  :config
+  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
+
+(use-package ruby-mode
+  :config
+  (add-hook 'ruby-mode-hook #'subword-mode))
+
+
 
 (use-package clojure-mode
   :ensure t
@@ -209,10 +267,41 @@ re-downloaded in order to locate PACKAGE."
 (use-package kibit-helper
   :ensure t)
 
+
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  (global-set-key (kbd "<f6>") 'ivy-resume))
+
+
+(use-package diff-hl
+  :ensure t
+  :config
+  (global-diff-hl-mode +1)
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode +1))
+
+(use-package undo-tree
+  :ensure t
+  :config
+  ;; autosave the undo-tree history
+  (setq undo-tree-history-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq undo-tree-auto-save-history t))
+
 (global-linum-mode t)
 
 
-;; Allow hash to be entered  
+;; Allow hash to be entered
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 ;; Theme
 (load-file "~/.emacs.d/themes/dracula2-theme.el")
@@ -245,7 +334,7 @@ re-downloaded in order to locate PACKAGE."
 ;;cljr-helm
 (require 'cljr-helm)
 ;; global set helm
-(global-set-key (kbd "M-x") 'helm-M-x) 
+(global-set-key (kbd "M-x") 'helm-M-x)
 
 (autoload 'clojure-mode "clojure-mode" "clojure mode" t)
 (add-hook 'cider-mode-hook
@@ -278,6 +367,10 @@ re-downloaded in order to locate PACKAGE."
 
 ;; Magit for git
 (global-set-key (kbd "C-x g") 'magit-status)
+
+;; cider configuration
+(setq cider-font-lock-dynamically '(macro core function var))
+(setq cider-pprint-fn "user/my-pprint")
 
 
 ;; Custom User configurations:
@@ -321,5 +414,8 @@ re-downloaded in order to locate PACKAGE."
  version-control t)       ; use versioned backups
 
  (setq backup-directory-alist
-          `(("." . ,(concat user-emacs-directory "backups"))))
+       `(("." . ,(concat user-emacs-directory "backups"))))
 
+
+; revert buffers automatically when underlying files are changed externally
+(global-auto-revert-mode t)
