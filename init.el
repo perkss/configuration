@@ -1,18 +1,3 @@
-;; ---------------------------------------------------
-;; Sample emacs config focusing on clojure development
-;; ---------------------------------------------------
-
-;; installed packages
-;; - exec-path-from-shell (not from stable!)
-;; - hl-sexp
-;; - paredit
-;; - clojure-mode
-;; - cider
-;; - company
-;; - flycheck (not from stable!)
-;; - flycheck-clojure
-;; - clj-refactor
-
 ;; Add .emacs.d/lisp to load-path
 (setq dotfiles-lisp-dir
       (file-name-as-directory
@@ -34,11 +19,19 @@
 (package-initialize)
 
 
-(defconst bozhidar-savefile-dir (expand-file-name "savefile" user-emacs-directory))
+(defconst savefile-dir (expand-file-name "savefile" user-emacs-directory))
 
 ;; create the savefile dir if it doesn't exist
-(unless (file-exists-p bozhidar-savefile-dir)
-  (make-directory bozhidar-savefile-dir))
+(unless (file-exists-p savefile-dir)
+  (make-directory savefile-dir))
+
+;; the toolbar is just a waste of valuable screen estate
+;; in a tty tool-bar-mode does not properly auto-load, and is
+;; already disabled anyway
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+
+(setq ring-bell-function 'ignore)
 
 (unless package-archive-contents
   (package-refresh-contents))
@@ -53,7 +46,59 @@
 (setq large-file-warning-threshold 100000000)
 
 
+;; disable startup screen
+(setq inhibit-startup-screen t)
 
+;; nice scrolling
+(setq scroll-margin 0
+      scroll-conservatively 100000
+      scroll-preserve-screen-position 1)
+
+;; mode line settings
+(line-number-mode t)
+(column-number-mode t)
+(size-indication-mode t)
+
+;; enable y/n answers
+(fset 'yes-or-no-p 'y-or-n-p)
+
+
+;; more useful frame title, that show either a file or a
+;; buffer name (if the buffer isn't visiting a file)
+(setq frame-title-format
+      '((:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
+
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+;; hippie expand is dabbrev expand on steroids
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill
+                                         try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-all-abbrevs
+                                         try-expand-list
+                                         try-expand-line
+                                         try-complete-lisp-symbol-partially
+                                         try-complete-lisp-symbol))
+
+;; use hippie-expand instead of dabbrev
+(global-set-key (kbd "M-/") #'hippie-expand)
+(global-set-key (kbd "s-/") #'hippie-expand)
+
+;; replace buffer-menu with ibuffer
+(global-set-key (kbd "C-x C-b") #'ibuffer)
+
+;; delete the selection with a keypress
+(delete-selection-mode t)
+
+;; highlight the current line
+(global-hl-line-mode +1)
 
 (add-to-list 'load-path (concat user-emacs-directory "site-lisp"))
 
@@ -82,6 +127,67 @@ re-downloaded in order to locate PACKAGE."
 
 
 (setq use-package-verbose t)
+
+
+(use-package ielm
+  :config
+  (add-hook 'ielm-mode-hook #'eldoc-mode)
+  (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
+
+(use-package avy
+  :ensure t
+  :bind (("s-." . avy-goto-word-or-subword-1)
+         ("s-," . avy-goto-char))
+  :config
+  (setq avy-background t))
+
+
+(use-package pt
+  :ensure t)
+
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
+
+(use-package elisp-slime-nav
+  :ensure t
+  :config
+  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+    (add-hook hook #'elisp-slime-nav-mode)))
+
+(use-package paredit
+  :ensure t
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  ;; enable in the *scratch* buffer
+  (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
+  (add-hook 'ielm-mode-hook #'paredit-mode)
+  (add-hook 'lisp-mode-hook #'paredit-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
+
+(use-package paren
+  :config
+  (show-paren-mode +1))
+
+(use-package abbrev
+  :config
+  (setq save-abbrevs 'silently)
+  (setq-default abbrev-mode t))
+
+(use-package uniquify
+  :config
+  (setq uniquify-buffer-name-style 'forward)
+  (setq uniquify-separator "/")
+  ;; rename after killing uniquified
+  (setq uniquify-after-kill-buffer-p t)
+  ;; don't muck with special buffers
+  (setq uniquify-ignore-buffers-re "^\\*"))
+
+(use-package windmove
+  :config
+  ;; use shift + arrow keys to switch between visible buffers
+  (windmove-default-keybindings))
+
 
 
 (use-package dired
@@ -147,12 +253,12 @@ re-downloaded in order to locate PACKAGE."
         ;; save every minute
         savehist-autosave-interval 60
         ;; keep the home clean
-        savehist-file (expand-file-name "savehist" bozhidar-savefile-dir))
+        savehist-file (expand-file-name "savehist" savefile-dir))
   (savehist-mode +1))
 
 (use-package recentf
   :config
-  (setq recentf-save-file (expand-file-name "recentf" bozhidar-savefile-dir)
+  (setq recentf-save-file (expand-file-name "recentf" savefile-dir)
         recentf-max-saved-items 500
         recentf-max-menu-items 15
         ;; disable recentf-cleanup on Emacs start, because it can cause
@@ -179,7 +285,7 @@ re-downloaded in order to locate PACKAGE."
     (add-hook hook #'whitespace-mode))
   (add-hook 'before-save-hook #'whitespace-cleanup)
   :config
-  (setq whitespace-line-column 80) ;; limit line length
+  (setq whitespace-line-column 120) ;; limit line length
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
 
@@ -231,17 +337,21 @@ re-downloaded in order to locate PACKAGE."
 (use-package cljr-helm
   :ensure t)
 
+
 (use-package projectile
   :ensure t
+  :bind ("s-p" . projectile-command-map)
   :config
-  (projectile-global-mode)
-  (setq projectile-enable-caching t))
+  (setq projectile-completion-system 'ivy)
+  (projectile-global-mode +1))
 
 (use-package helm-projectile
   :ensure t
   :bind ("M-t" . helm-projectile-find-file)
   :config
-  (helm-projectile-on))
+  (helm-projectile-on)
+  (setq projectile-completion-system 'ivy)
+  (projectile-global-mode +1))
 
 (use-package rainbow-delimiters
   :ensure t
@@ -297,6 +407,18 @@ re-downloaded in order to locate PACKAGE."
   (setq undo-tree-history-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t))
+
+;; Javascript
+
+;;
+
+
+
+
+
+;; Better imenu
+(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+
 
 (global-linum-mode t)
 
@@ -370,7 +492,7 @@ re-downloaded in order to locate PACKAGE."
 
 ;; cider configuration
 (setq cider-font-lock-dynamically '(macro core function var))
-(setq cider-pprint-fn "user/my-pprint")
+
 
 
 ;; Custom User configurations:
@@ -390,13 +512,44 @@ re-downloaded in order to locate PACKAGE."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
+ '(company-quickhelp-color-background "#4F4F4F")
+ '(company-quickhelp-color-foreground "#DCDCCC")
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
     ("138d69908243e827e869330c43e7abc0f70f334dfa90a589e4d8a1f98a1e29af" default)))
+ '(fci-rule-color "#383838")
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell))))
+    (js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
