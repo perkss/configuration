@@ -223,6 +223,9 @@ re-downloaded in order to locate PACKAGE."
   (([(meta shift up)] . move-text-up)
    ([(meta shift down)] . move-text-down)))
 
+(use-package markdown-mode
+  :ensure t)
+
 (use-package yaml-mode
   :ensure t)
 
@@ -408,6 +411,32 @@ re-downloaded in order to locate PACKAGE."
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t))
 
+(use-package swiper
+  :ensure t
+  :config
+  (global-set-key "\C-s" 'swiper))
+
+(use-package counsel
+  :ensure t
+  :config
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+  (global-set-key (kbd "<f1> l") 'counsel-find-library)
+  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  (global-set-key (kbd "C-c g") 'counsel-git)
+  (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-c k") 'counsel-ag)
+  (global-set-key (kbd "C-x l") 'counsel-locate)
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+
+;; temporarily highlight changes from yanking, etc
+(use-package volatile-highlights
+  :ensure t
+  :config
+  (volatile-highlights-mode +1))
 ;; Javascript
 
 ;;
@@ -526,7 +555,7 @@ re-downloaded in order to locate PACKAGE."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
+    (swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
