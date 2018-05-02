@@ -437,10 +437,24 @@ re-downloaded in order to locate PACKAGE."
   :ensure t
   :config
   (volatile-highlights-mode +1))
+
+;; Side project viewer
+(use-package neotree
+  :ensure t
+  :config
+  (global-set-key [f8] 'neotree-toggle))
 ;; Javascript
 
 ;;
-
+(use-package highlight-symbol
+  :ensure t
+  :config
+  (highlight-symbol-mode t)
+  (add-hook 'prog-mode-hook 'highlight-symbol-mode)
+  (global-set-key [(control f3)] 'highlight-symbol)
+  (global-set-key [f3] 'highlight-symbol-next)
+  (global-set-key [(shift f3)] 'highlight-symbol-prev)
+  (global-set-key [(meta f3)] 'highlight-symbol-query-replace))
 
 
 
@@ -457,6 +471,14 @@ re-downloaded in order to locate PACKAGE."
 ;; Theme
 (load-file "~/.emacs.d/themes/dracula2-theme.el")
 ;;(dracula2);
+
+;; Highlight first word for java api calls
+;; From https://www.reddit.com/r/Clojure/comments/56e3hp/syntax_highlighting_for_function_calls_in_emacs/
+(add-hook 'clojure-mode-hook
+          '(lambda ()
+             (font-lock-add-keywords
+                nil
+                '(("(\\(\\w+\\)\\s-+" 1 font-lock-keyword-face)))))
 
 ;; show opening, closing parens
 (show-paren-mode)
@@ -476,6 +498,7 @@ re-downloaded in order to locate PACKAGE."
                 "cfg-cljrefactor.el"))
   (load (concat dotfiles-lisp-dir file)))
 
+(toggle-scroll-bar -1)
 
 (require 'cider-eldoc)
 ;;(require 'clj-refactor)
@@ -555,7 +578,7 @@ re-downloaded in order to locate PACKAGE."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
+    (highlight-symbol swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
