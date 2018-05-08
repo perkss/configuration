@@ -406,6 +406,10 @@ re-downloaded in order to locate PACKAGE."
 (use-package undo-tree
   :ensure t
   :config
+  (global-undo-tree-mode 1)
+  (global-set-key (kbd "C-z") 'undo)
+  (defalias 'redo 'undo-tree-redo)
+  (global-set-key (kbd "C-S-z") 'redo)
   ;; autosave the undo-tree history
   (setq undo-tree-history-directory-alist
         `((".*" . ,temporary-file-directory)))
