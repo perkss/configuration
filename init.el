@@ -6,6 +6,10 @@
                "lisp")))
 (add-to-list 'load-path dotfiles-lisp-dir)
 
+
+;; Meta Key CMD
+(setq ns-command-modifier (quote meta))
+
 ;; don't use tabs for indent
 (setq-default indent-tabs-mode nil)
 
@@ -313,6 +317,7 @@ re-downloaded in order to locate PACKAGE."
 (use-package cider
   :ensure t
   :config
+  (setq nrepl-log-messages t)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
@@ -461,7 +466,30 @@ re-downloaded in order to locate PACKAGE."
   (global-set-key [(meta f3)] 'highlight-symbol-query-replace))
 
 
+;; Yaml mode support
+(use-package yaml-mode
+  :ensure t
+  :mode "\\.yaml\\'")
 
+;; Ruby
+(use-package inf-ruby
+  :ensure t
+  :config
+  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
+
+(use-package ruby-mode
+  :config
+  (add-hook 'ruby-mode-hook #'subword-mode))
+
+;; Rust
+(use-package rust-mode
+  :mode "\\.rs\\'"
+  :config
+  (add-hook 'rust-mode-hook 'racer-mode)
+  (add-hook 'racer-mode-hook 'eldoc-mode)
+  (add-hook 'rust-mode-hook 'company-mode)
+  (add-hook 'rust-mode-hook 'flycheck-mode)
+  (setq company-tooltip-align-annotations t))
 
 ;; Better imenu
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
@@ -584,6 +612,23 @@ re-downloaded in order to locate PACKAGE."
    (quote
     (highlight-symbol swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
+ '(safe-local-variable-values
+   (quote
+    ((scss-mode
+      (css-indent-offset . 2))
+     (eval cider-register-cljs-repl-type
+           (quote figwheel+integrant)
+           "(do (require 'figwheel-sidecar.repl-api)
+              (require 'integrant.repl)
+              (integrant.repl/go)
+              (figwheel-sidecar.repl-api/cljs-repl))")
+     (eval cider-register-cljs-repl-type
+           (quote figwheel+integrant)
+           "(do (require 'figwheel-sidecar.repl-api)
+               (require 'integrant.repl)
+               (integrant.repl/go)
+               (figwheel-sidecar.repl-api/cljs-repl))")
+     (cider-default-cljs-repl . figwheel+integrant))))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
    (quote
