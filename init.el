@@ -491,6 +491,9 @@ re-downloaded in order to locate PACKAGE."
   (add-hook 'rust-mode-hook 'flycheck-mode)
   (setq company-tooltip-align-annotations t))
 
+(use-package sql-indent
+  :ensure t)
+
 ;; Better imenu
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 
@@ -501,16 +504,20 @@ re-downloaded in order to locate PACKAGE."
 ;; Allow hash to be entered
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 ;; Theme
-(load-file "~/.emacs.d/themes/dracula2-theme.el")
+;;(load-file "~/.emacs.d/themes/dracula2-theme.el")
 ;;(dracula2);
+
+
+
+
 
 ;; Highlight first word for java api calls
 ;; From https://www.reddit.com/r/Clojure/comments/56e3hp/syntax_highlighting_for_function_calls_in_emacs/
 (add-hook 'clojure-mode-hook
           '(lambda ()
              (font-lock-add-keywords
-                nil
-                '(("(\\(\\w+\\)\\s-+" 1 font-lock-keyword-face)))))
+              nil
+              '(("(\\(\\w+\\)\\s-+" 1 font-lock-keyword-face)))))
 
 ;; show opening, closing parens
 (show-paren-mode)
@@ -610,7 +617,7 @@ re-downloaded in order to locate PACKAGE."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (highlight-symbol swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
+    (sql-indent highlight-symbol swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(safe-local-variable-values
    (quote
@@ -673,3 +680,7 @@ re-downloaded in order to locate PACKAGE."
 
 ; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
+
+(use-package spacemacs-theme
+  :defer t
+  :init (load-theme 'spacemacs-dark t))
