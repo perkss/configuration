@@ -681,6 +681,6 @@ re-downloaded in order to locate PACKAGE."
 ; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
 
-(use-package spacemacs-theme
-  :defer t
-  :init (load-theme 'spacemacs-dark t))
+(use-package spacemacs-common
+    :ensure spacemacs-theme
+    :config (load-theme 'spacemacs-dark t))
