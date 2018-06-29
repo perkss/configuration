@@ -233,6 +233,9 @@ re-downloaded in order to locate PACKAGE."
 (use-package yaml-mode
   :ensure t)
 
+(use-package cask
+  :ensure t)
+
 (use-package cask-mode
   :ensure t)
 
@@ -292,7 +295,7 @@ re-downloaded in order to locate PACKAGE."
     (add-hook hook #'whitespace-mode))
   (add-hook 'before-save-hook #'whitespace-cleanup)
   :config
-  (setq whitespace-line-column 120) ;; limit line length
+  (setq whitespace-line-column 80) ;; limit line length
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
 
@@ -304,7 +307,6 @@ re-downloaded in order to locate PACKAGE."
 (use-package ruby-mode
   :config
   (add-hook 'ruby-mode-hook #'subword-mode))
-
 
 
 (use-package clojure-mode
@@ -327,7 +329,9 @@ re-downloaded in order to locate PACKAGE."
   :ensure t)
 
 (use-package clj-refactor
-  :ensure t)
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'clj-refactor-mode))
 (use-package cljsbuild-mode
   :ensure t)
 
@@ -339,10 +343,50 @@ re-downloaded in order to locate PACKAGE."
 (use-package flycheck-joker
   :ensure t)
 
+(use-package flycheck-clojure
+  :ensure t
+  :init  (add-hook 'after-init-hook #'global-flycheck-mode)
+  :config
+  (use-package flycheck
+    :config
+    (flycheck-clojure-setup)))
+
+(use-package flycheck-cask
+  :ensure t)
+
+(use-package flycheck-cython
+  :ensure t)
+
+(use-package flycheck-tip
+  :ensure t)
+
+
+
 (use-package helm
   :ensure t)
 
 (use-package cljr-helm
+  :ensure t)
+
+(use-package helm-ag
+  :ensure t)
+
+(use-package helm-clojuredocs
+  :ensure t)
+
+(use-package helm-company
+  :ensure t)
+
+(use-package helm-dired-history
+  :ensure t)
+
+(use-package helm-dired-recent-dirs
+  :ensure t)
+
+(use-package helm-flycheck
+  :ensure t)
+
+(use-package cmake-mode
   :ensure t)
 
 
@@ -494,6 +538,9 @@ re-downloaded in order to locate PACKAGE."
 (use-package sql-indent
   :ensure t)
 
+(use-package github-browse-file
+  :ensure t)
+
 ;; Better imenu
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 
@@ -617,7 +664,7 @@ re-downloaded in order to locate PACKAGE."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (sql-indent highlight-symbol swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
+    (cmake-mode flycheck-haskell helm-git helm-flycheck helm-dired-recent-dirs helm-dired-history helm-company helm-clojuredocs helm-ag flycheck-tip flycheck-pos-tip github-browse-file sql-indent highlight-symbol swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(safe-local-variable-values
    (quote
