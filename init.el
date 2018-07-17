@@ -244,7 +244,8 @@ re-downloaded in order to locate PACKAGE."
   :config
   (global-company-mode))
 
-
+(use-package company-jedi
+  :ensure t)
 
 (use-package ivy
   :ensure t
@@ -541,6 +542,13 @@ re-downloaded in order to locate PACKAGE."
 (use-package github-browse-file
   :ensure t)
 
+;; Python
+(use-package jedi
+  :ensure t)
+
+(use-package pytest
+  :ensure t)
+
 ;; Better imenu
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 
@@ -664,7 +672,7 @@ re-downloaded in order to locate PACKAGE."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (cmake-mode flycheck-haskell helm-git helm-flycheck helm-dired-recent-dirs helm-dired-history helm-company helm-clojuredocs helm-ag flycheck-tip flycheck-pos-tip github-browse-file sql-indent highlight-symbol swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
+    (smartparens pytest jedi magithub company-jedi cmake-mode flycheck-haskell helm-git helm-flycheck helm-dired-recent-dirs helm-dired-history helm-company helm-clojuredocs helm-ag flycheck-tip flycheck-pos-tip github-browse-file sql-indent highlight-symbol swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(safe-local-variable-values
    (quote
