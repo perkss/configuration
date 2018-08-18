@@ -184,9 +184,9 @@ re-downloaded in order to locate PACKAGE."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (helm-git flycheck-haskell smart-parens magithub zenburn-theme yaml-mode which-key web-mode volatile-highlights use-package undo-tree toml-mode tagedit swiper-helm sql-indent spacemacs-theme smex smart-mode-line shell-pop scala-mode rust-mode rainbow-mode rainbow-delimiters pytest pt popwin neotree move-text markdown-mode magit-annex kibit-helper json-mode js2-mode jedi inf-ruby imenu-anywhere ido-ubiquitous hl-todo hl-sexp highlight-symbol highlight-parentheses helm-swoop helm-projectile helm-flycheck helm-dired-recent-dirs helm-dired-history helm-descbinds helm-company helm-clojuredocs helm-ag hardcore-mode go-mode github-browse-file git-timemachine git-rebase-mode git-commit-mode flyspell-lazy flycheck-tip flycheck-pos-tip flycheck-joker flycheck-cython flycheck-color-mode-line flycheck-clojure flycheck-cask fic-mode expand-region exec-path-from-shell enh-ruby-mode emoji-cheat-sheet-plus elisp-slime-nav easy-kill discover diff-hl cpputils-cmake counsel company-web company-jedi cmake-mode clojure-mode-extra-font-locking clojure-cheatsheet cljsbuild-mode cider-eval-sexp-fu cask-mode cask browse-at-remote better-defaults avy anzu aggressive-indent)))
+    (feature-mode helm-git flycheck-haskell smart-parens magithub zenburn-theme yaml-mode which-key web-mode volatile-highlights use-package undo-tree toml-mode tagedit swiper-helm sql-indent spacemacs-theme smex smart-mode-line shell-pop scala-mode rust-mode rainbow-mode rainbow-delimiters pytest pt popwin neotree move-text markdown-mode magit-annex kibit-helper json-mode js2-mode jedi inf-ruby imenu-anywhere ido-ubiquitous hl-todo hl-sexp highlight-symbol highlight-parentheses helm-swoop helm-projectile helm-flycheck helm-dired-recent-dirs helm-dired-history helm-descbinds helm-company helm-clojuredocs helm-ag hardcore-mode go-mode github-browse-file git-timemachine git-rebase-mode git-commit-mode flyspell-lazy flycheck-tip flycheck-pos-tip flycheck-joker flycheck-cython flycheck-color-mode-line flycheck-clojure flycheck-cask fic-mode expand-region exec-path-from-shell enh-ruby-mode emoji-cheat-sheet-plus elisp-slime-nav easy-kill discover diff-hl cpputils-cmake counsel company-web company-jedi cmake-mode clojure-mode-extra-font-locking clojure-cheatsheet cljsbuild-mode cider-eval-sexp-fu cask-mode cask browse-at-remote better-defaults avy anzu aggressive-indent)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
- '(projectile-completion-system (quote helm))
+ '(projectile-completion-system (quote helm) t)
  '(projectile-globally-ignored-directories
    (quote
     (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "Godeps")))
@@ -235,6 +235,13 @@ re-downloaded in order to locate PACKAGE."
   :ensure t
   :config
   (global-set-key (kbd "C-.") #'imenu-anywhere))
+
+;;Cucumber
+(use-package feature-mode
+  :ensure t
+  :config
+  (setq feature-step-search-path "features/**/*steps.clj")
+  (setq feature-step-search-gems-path "gems/ruby/*/gems/*/**/*steps.rb"))
 
 (use-package ielm
   :ensure t
@@ -904,8 +911,6 @@ re-downloaded in order to locate PACKAGE."
 
 ;; cider configuration
 (setq cider-font-lock-dynamically '(macro core function var))
-
-(setq cljr-inject-dependencies-at-jack-in nil)
 
 
 ;; Custom User configurations:
