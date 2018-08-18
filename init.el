@@ -20,6 +20,25 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
+(setq package-pinned-packages
+      '((imenu-anywhere . "melpa-stable")
+        (spaceline . "melpa-stable")
+        (clj-refactor . "melpa-stable")
+        ;;        (cider . "melpa-stable")
+        ;;(flycheck-clojure . "melpa-stable")
+        (flycheck-pos-tip . "melpa-stable")
+        (clojure-mode . "melpa-stable")
+        (linum-relative . "melpa-stable")
+        (aggressive-indent . "melpa-stable")
+        (evil-leader . "melpa-stable")
+        (evil-visualstart . "melpa-stable")
+        (evil-jumper . "melpa-stable")
+        (evil-snipe . "melpa-stable")
+        (evil . "melpa-stable")
+        (evil-commentary . "melpa-stable")))
 (package-initialize)
 
 
@@ -132,8 +151,93 @@ re-downloaded in order to locate PACKAGE."
 
 (setq use-package-verbose t)
 
+;; custom variables
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
+ '(backup-directory-alist (quote (("." . "~/.emacs.d/backups"))))
+ '(cider-repl-display-help-banner nil)
+ '(cider-repl-use-pretty-printing t)
+ '(company-quickhelp-color-background "#4F4F4F")
+ '(company-quickhelp-color-foreground "#DCDCCC")
+ '(custom-enabled-themes nil)
+ '(custom-safe-themes
+   (quote
+    ("138d69908243e827e869330c43e7abc0f70f334dfa90a589e4d8a1f98a1e29af" default)))
+ '(fci-rule-color "#383838")
+ '(flycheck-disabled-checkers
+   (quote
+    (emacs-lisp-checkdoc ruby-rubylint clojure-cider-typed clojure-cider-eastwood clojure-cider-kibit)))
+ '(helm-adaptive-history-file "~/.emacs.d/helm-history")
+ '(helm-ff-file-name-history-use-recentf t)
+ '(helm-ff-transformer-show-only-basename nil)
+ '(helm-move-to-line-cycle-in-source t)
+ '(helm-scroll-amount 8)
+ '(helm-split-window-in-side-p t)
+ '(imenu-auto-rescan t)
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(package-selected-packages
+   (quote
+    (helm-git flycheck-haskell smart-parens magithub zenburn-theme yaml-mode which-key web-mode volatile-highlights use-package undo-tree toml-mode tagedit swiper-helm sql-indent spacemacs-theme smex smart-mode-line shell-pop scala-mode rust-mode rainbow-mode rainbow-delimiters pytest pt popwin neotree move-text markdown-mode magit-annex kibit-helper json-mode js2-mode jedi inf-ruby imenu-anywhere ido-ubiquitous hl-todo hl-sexp highlight-symbol highlight-parentheses helm-swoop helm-projectile helm-flycheck helm-dired-recent-dirs helm-dired-history helm-descbinds helm-company helm-clojuredocs helm-ag hardcore-mode go-mode github-browse-file git-timemachine git-rebase-mode git-commit-mode flyspell-lazy flycheck-tip flycheck-pos-tip flycheck-joker flycheck-cython flycheck-color-mode-line flycheck-clojure flycheck-cask fic-mode expand-region exec-path-from-shell enh-ruby-mode emoji-cheat-sheet-plus elisp-slime-nav easy-kill discover diff-hl cpputils-cmake counsel company-web company-jedi cmake-mode clojure-mode-extra-font-locking clojure-cheatsheet cljsbuild-mode cider-eval-sexp-fu cask-mode cask browse-at-remote better-defaults avy anzu aggressive-indent)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
+ '(projectile-completion-system (quote helm))
+ '(projectile-globally-ignored-directories
+   (quote
+    (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "Godeps")))
+ '(safe-local-variable-values
+   (quote
+    ((scss-mode
+      (css-indent-offset . 2))
+     (eval cider-register-cljs-repl-type
+           (quote figwheel+integrant)
+           "(do (require 'figwheel-sidecar.repl-api)
+              (require 'integrant.repl)
+              (integrant.repl/go)
+              (figwheel-sidecar.repl-api/cljs-repl))")
+     (eval cider-register-cljs-repl-type
+           (quote figwheel+integrant)
+           "(do (require 'figwheel-sidecar.repl-api)
+               (require 'integrant.repl)
+               (integrant.repl/go)
+               (figwheel-sidecar.repl-api/cljs-repl))")
+     (cider-default-cljs-repl . figwheel+integrant))))
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
+
+
+(use-package imenu-anywhere
+  :ensure t
+  :config
+  (global-set-key (kbd "C-.") #'imenu-anywhere))
 
 (use-package ielm
+  :ensure t
   :config
   (add-hook 'ielm-mode-hook #'eldoc-mode)
   (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
@@ -168,6 +272,15 @@ re-downloaded in order to locate PACKAGE."
   (add-hook 'ielm-mode-hook #'paredit-mode)
   (add-hook 'lisp-mode-hook #'paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
+
+
+(use-package aggressive-indent
+  :ensure t
+  :config
+  (global-aggressive-indent-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'sql-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'web-mode))
 
 (use-package paren
   :config
@@ -242,6 +355,14 @@ re-downloaded in order to locate PACKAGE."
 (use-package company
   :ensure t
   :config
+  (setq company-idle-delay 0.5)
+  (setq company-show-numbers t)
+  (setq company-tooltip-limit 10)
+  (setq company-minimum-prefix-length 2)
+  (setq company-tooltip-align-annotations t)
+  ;; invert the navigation direction if the the completion popup-isearch-match
+  ;; is displayed on top (happens near the bottom of windows)
+  (setq company-tooltip-flip-when-above t)
   (global-company-mode))
 
 (use-package company-jedi
@@ -284,6 +405,12 @@ re-downloaded in order to locate PACKAGE."
   :config
   (global-anzu-mode))
 
+(use-package better-defaults
+  :ensure t)
+
+(use-package browse-at-remote
+  :ensure t)
+
 (use-package move-text
   :ensure t
   :bind
@@ -320,6 +447,7 @@ re-downloaded in order to locate PACKAGE."
 (use-package cider
   :ensure t
   :config
+  (setq cljr-inject-dependencies-at-jack-in nil)
   (setq nrepl-log-messages t)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
@@ -329,45 +457,137 @@ re-downloaded in order to locate PACKAGE."
 (use-package clojure-cheatsheet
   :ensure t)
 
-(use-package clj-refactor
-  :ensure t
-  :init
-  (add-hook 'clojure-mode-hook 'clj-refactor-mode))
+;; Clj-refacotr causes problems as cider brings it in
+
 (use-package cljsbuild-mode
   :ensure t)
 
+;; Reference https://github.com/jwiegley/dot-emacs/blob/master/init.el
 (use-package flycheck
   :ensure t
+  :commands (flycheck-mode
+             flycheck-next-error
+             flycheck-previous-error)
+  :init
+  (dolist (where '((emacs-lisp-mode-hook . emacs-lisp-mode-map)
+                   (haskell-mode-hook    . haskell-mode-map)
+                   (js2-mode-hook        . js2-mode-map)
+                   (c-mode-common-hook   . c-mode-base-map)))
+    (add-hook (car where)
+              `(lambda ()
+                 (bind-key "M-n" #'flycheck-next-error ,(cdr where))
+                 (bind-key "M-p" #'flycheck-previous-error ,(cdr where)))))
   :config
+  (defalias 'show-error-at-point-soon
+    'flycheck-show-error-at-point)
+
+  (defun magnars/adjust-flycheck-automatic-syntax-eagerness ()
+    "Adjust how often we check for errors based on if there are any.
+  This lets us fix any errors as quickly as possible, but in a
+  clean buffer we're an order of magnitude laxer about checking."
+    (setq flycheck-idle-change-delay
+          (if flycheck-current-errors 0.3 3.0)))
+
+  ;; Each buffer gets its own idle-change-delay because of the
+  ;; buffer-sensitive adjustment above.
+  (make-variable-buffer-local 'flycheck-idle-change-delay)
+
+  (add-hook 'flycheck-after-syntax-check-hook
+            'magnars/adjust-flycheck-automatic-syntax-eagerness)
+
+  ;; Remove newline checks, since they would trigger an immediate check
+  ;; when we want the idle-change-delay to be in effect while editing.
+  (setq-default flycheck-check-syntax-automatically '(save
+                                                      idle-change
+                                                      mode-enabled))
+
+  (defun flycheck-handle-idle-change ()
+    "Handle an expired idle time since the last change.
+  This is an overwritten version of the original
+  flycheck-handle-idle-change, which removes the forced deferred.
+  Timers should only trigger inbetween commands in a single
+  threaded system and the forced deferred makes errors never show
+  up before you execute another command."
+    (flycheck-clear-idle-change-timer)
+    (flycheck-buffer-automatically 'idle-change))
   (add-hook 'after-init-hook #'global-flycheck-mode))
+
+(use-package flycheck-color-mode-line
+  :ensure t
+  :config
+  (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
+
+(use-package flycheck-pos-tip
+  :ensure t
+  :config
+  (eval-after-load 'flycheck
+    '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
 (use-package flycheck-joker
   :ensure t)
 
+
 (use-package flycheck-clojure
   :ensure t
-  :init  (add-hook 'after-init-hook #'global-flycheck-mode)
   :config
-  (use-package flycheck
-    :config
-    (flycheck-clojure-setup)))
+  (eval-after-load 'flycheck '(flycheck-clojure-setup)))
 
 (use-package flycheck-cask
   :ensure t)
 
-(use-package flycheck-cython
+(use-package flyspell-lazy
   :ensure t)
+
+(use-package git-commit
+  :ensure t
+  :config
+  (add-hook 'git-commit-mode-hook 'flyspell-mode))
+
+
 
 (use-package flycheck-tip
   :ensure t)
 
-
+;; This disables the arrow keys
+;; use-package hardcore-mode
 
 (use-package helm
-  :ensure t)
+  :ensure t
+  :config
+  ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+  ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+  ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+  (global-set-key (kbd "C-c h") 'helm-command-prefix)
+  (global-unset-key (kbd "C-x c"))
+  (require 'helm-config)
 
-(use-package cljr-helm
-  :ensure t)
+  (global-set-key (kbd "C-c M-x")     'execute-extended-command) ; old M-x
+  (global-set-key (kbd "C-x C-d")     'helm-browse-project)
+  (global-set-key (kbd "C-h C-f")     'helm-apropos)
+  (global-set-key (kbd "C-h r")       'helm-info-emacs)
+  (global-set-key (kbd "C-h i")       'helm-info-at-point)
+  (global-set-key (kbd "C-:")         'helm-eval-expression-with-eldoc)
+  (global-set-key (kbd "C-,")         'helm-calcul-expression)
+  (global-set-key (kbd "C-x C-b")     'helm-buffers-list)
+  (global-set-key (kbd "C-c f")       'helm-recentf)
+  ;;  (global-set-key (kbd "C-x C-f")     'helm-find-files)
+  (global-set-key (kbd "M-x")         'helm-M-x)
+  (global-set-key (kbd "M-y")         'helm-show-kill-ring)
+  (global-set-key (kbd "C-c i")       'helm-imenu)
+  (global-set-key (kbd "C-x b")       'helm-mini)
+  ;;  (global-set-key (kbd "C-x C-f")     'helm-find-files)
+  (global-set-key (kbd "C-c h o")     'helm-occur)
+
+  (define-key global-map [remap jump-to-register]      'helm-register)
+  (define-key global-map [remap list-buffers]          'helm-buffers-list)
+  (define-key global-map [remap dabbrev-expand]        'helm-dabbrev)
+  (define-key global-map [remap find-tag]              'helm-etags-select)
+  (define-key global-map [remap xref-find-definitions] 'helm-etags-select)
+
+  (helm-adaptive-mode t)
+  (helm-mode 1))
+
+;; causes problems cljr helm
 
 (use-package helm-ag
   :ensure t)
@@ -390,13 +610,33 @@ re-downloaded in order to locate PACKAGE."
 (use-package cmake-mode
   :ensure t)
 
+(use-package helm-flycheck
+  :ensure t
+  :config
+  (eval-after-load 'flycheck
+    '(define-key flycheck-mode-map (kbd "C-c ! h") 'helm-flycheck)))
+
+(use-package helm-swoop
+  :ensure t
+  :config
+  (global-set-key (kbd "C-c o") 'helm-swoop))
+
+(use-package highlight-symbol
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'highlight-symbol-mode)
+  (global-set-key [(control f3)] 'highlight-symbol)
+  (global-set-key [f3] 'highlight-symbol-next)
+  (global-set-key [(shift f3)] 'highlight-symbol-prev)
+  (global-set-key [(meta f3)] 'highlight-symbol-query-replace))
 
 (use-package projectile
   :ensure t
-  :bind ("s-p" . projectile-command-map)
-  :config
+  :init
   (setq projectile-completion-system 'ivy)
-  (projectile-global-mode +1))
+  :bind ("C-c p" . projectile-command-map)
+  :config
+  (projectile-mode +1))
 
 (use-package helm-projectile
   :ensure t
@@ -404,7 +644,16 @@ re-downloaded in order to locate PACKAGE."
   :config
   (helm-projectile-on)
   (setq projectile-completion-system 'ivy)
-  (projectile-global-mode +1))
+  (projectile-mode +1))
+
+(use-package hl-todo
+  :ensure t
+  :config
+  (global-hl-todo-mode))
+
+(use-package git-timemachine
+  :ensure t
+  :bind (("s-g" . git-timemachine)))
 
 (use-package rainbow-delimiters
   :ensure t
@@ -422,12 +671,18 @@ re-downloaded in order to locate PACKAGE."
 (use-package magit-annex
   :ensure t)
 
+(use-package magithub
+  :ensure t)
+
 (use-package json-mode
   :ensure t)
 (use-package ag
   :ensure t)
 
 (use-package kibit-helper
+  :ensure t)
+
+(use-package cider-eval-sexp-fu
   :ensure t)
 
 
@@ -469,6 +724,9 @@ re-downloaded in order to locate PACKAGE."
   :ensure t
   :config
   (global-set-key "\C-s" 'swiper))
+
+(use-package swiper-helm
+  :ensure t)
 
 (use-package counsel
   :ensure t
@@ -549,6 +807,24 @@ re-downloaded in order to locate PACKAGE."
 (use-package pytest
   :ensure t)
 
+(use-package company-jedi
+  :ensure t)
+
+(use-package flycheck-haskell
+  :ensure t)
+
+(use-package helm-dired-recent-dirs
+  :ensure t)
+
+(use-package helm-dired-history
+  :ensure t)
+
+(use-package helm-company
+  :ensure t)
+
+(use-package helm-clojuredocs
+  :ensure t)
+
 ;; Better imenu
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 
@@ -585,13 +861,6 @@ re-downloaded in order to locate PACKAGE."
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
-(dolist (file '("cfg-paredit.el"
-		"cfg-flycheck.el"
-		"cfg-hlsexp.el"
-		"cfg-cider.el"
-                "cfg-cljrefactor.el"))
-  (load (concat dotfiles-lisp-dir file)))
-
 (toggle-scroll-bar -1)
 
 (require 'cider-eldoc)
@@ -600,7 +869,7 @@ re-downloaded in order to locate PACKAGE."
 ;; helm
 (require 'helm-config)
 ;;cljr-helm
-(require 'cljr-helm)
+;;(require 'cljr-helm)
 ;; global set helm
 (global-set-key (kbd "M-x") 'helm-M-x)
 
@@ -613,24 +882,21 @@ re-downloaded in order to locate PACKAGE."
 (add-hook 'clojure-mode-hook 'cider-mode)
 ;; Add keybindings for items
 (add-hook 'clojure-mode-hook
-         (lambda ()
+          (lambda ()
             (setq-local cider-repl-use-pretty-printing t)
             (local-set-key [f5] 'helm-imenu)
-            (local-set-key [f6] 'cljr-helm)
+            ;;          (local-set-key [f6] 'cljr-helm)
             (local-set-key (kbd "<C-f5>") 'cider-test-run-test)
             (cider-auto-test-mode t)))
 
 (add-hook 'cider-repl-mode-hook
           (lambda ()
-            (local-set-key [f6] 'cljr-helm)))
+            ;;        (local-set-key [f6] 'cljr-helm)
+            ))
 
 (provide 'ca-clojure)
 
 (add-hook 'after-init-hook 'global-company-mode)
-
-;; Enable projectile mode
-(projectile-mode)
-(add-hook 'after-init-hook #'projectile-global-mode)
 
 
 ;; Magit for git
@@ -639,6 +905,7 @@ re-downloaded in order to locate PACKAGE."
 ;; cider configuration
 (setq cider-font-lock-dynamically '(macro core function var))
 
+(setq cljr-inject-dependencies-at-jack-in nil)
 
 
 ;; Custom User configurations:
@@ -653,66 +920,7 @@ re-downloaded in order to locate PACKAGE."
 
 (when (file-exists-p (concat dotfiles-lisp-dir "user-customizations.el"))
   (load (concat dotfiles-lisp-dir "user-customizations.el")))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
- '(company-quickhelp-color-background "#4F4F4F")
- '(company-quickhelp-color-foreground "#DCDCCC")
- '(custom-enabled-themes nil)
- '(custom-safe-themes
-   (quote
-    ("138d69908243e827e869330c43e7abc0f70f334dfa90a589e4d8a1f98a1e29af" default)))
- '(fci-rule-color "#383838")
- '(nrepl-message-colors
-   (quote
-    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
- '(package-selected-packages
-   (quote
-    (smartparens pytest jedi magithub company-jedi cmake-mode flycheck-haskell helm-git helm-flycheck helm-dired-recent-dirs helm-dired-history helm-company helm-clojuredocs helm-ag flycheck-tip flycheck-pos-tip github-browse-file sql-indent highlight-symbol swiper-helm swiper js2-mode kibit-helper json-mode cider cider-eval-sexp-fu ghub magit projectile company-irony helm ag rainbow-delimiters company hl-sexp paredit exec-path-from-shell)))
- '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
- '(safe-local-variable-values
-   (quote
-    ((scss-mode
-      (css-indent-offset . 2))
-     (eval cider-register-cljs-repl-type
-           (quote figwheel+integrant)
-           "(do (require 'figwheel-sidecar.repl-api)
-              (require 'integrant.repl)
-              (integrant.repl/go)
-              (figwheel-sidecar.repl-api/cljs-repl))")
-     (eval cider-register-cljs-repl-type
-           (quote figwheel+integrant)
-           "(do (require 'figwheel-sidecar.repl-api)
-               (require 'integrant.repl)
-               (integrant.repl/go)
-               (figwheel-sidecar.repl-api/cljs-repl))")
-     (cider-default-cljs-repl . figwheel+integrant))))
- '(vc-annotate-background "#2B2B2B")
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#BC8383")
-     (40 . "#CC9393")
-     (60 . "#DFAF8F")
-     (80 . "#D0BF8F")
-     (100 . "#E0CF9F")
-     (120 . "#F0DFAF")
-     (140 . "#5F7F5F")
-     (160 . "#7F9F7F")
-     (180 . "#8FB28F")
-     (200 . "#9FC59F")
-     (220 . "#AFD8AF")
-     (240 . "#BFEBBF")
-     (260 . "#93E0E3")
-     (280 . "#6CA0A3")
-     (300 . "#7CB8BB")
-     (320 . "#8CD0D3")
-     (340 . "#94BFF3")
-     (360 . "#DC8CC3"))))
- '(vc-annotate-very-old-color "#DC8CC3"))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -736,6 +944,9 @@ re-downloaded in order to locate PACKAGE."
 ; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
 
+(setq cljr-inject-dependencies-at-jack-in nil)
+
 (use-package spacemacs-common
-    :ensure spacemacs-theme
-    :config (load-theme 'spacemacs-dark t))
+  :ensure spacemacs-theme
+  :init
+  :config (load-theme 'spacemacs-dark t))
