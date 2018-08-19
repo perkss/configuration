@@ -26,7 +26,7 @@
 (setq package-pinned-packages
       '((imenu-anywhere . "melpa-stable")
         (spaceline . "melpa-stable")
-        (clj-refactor . "melpa-stable")
+        ;; (clj-refactor . "melpa-stable")
         ;;        (cider . "melpa-stable")
         ;;(flycheck-clojure . "melpa-stable")
         (flycheck-pos-tip . "melpa-stable")
@@ -186,7 +186,7 @@ re-downloaded in order to locate PACKAGE."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (counsel-projectile feature-mode helm-git flycheck-haskell smart-parens magithub zenburn-theme yaml-mode which-key web-mode volatile-highlights use-package undo-tree toml-mode tagedit swiper-helm sql-indent spacemacs-theme smex smart-mode-line shell-pop scala-mode rust-mode rainbow-mode rainbow-delimiters pytest pt popwin neotree move-text markdown-mode magit-annex kibit-helper json-mode js2-mode jedi inf-ruby imenu-anywhere ido-ubiquitous hl-todo hl-sexp highlight-symbol highlight-parentheses helm-swoop helm-projectile helm-flycheck helm-dired-recent-dirs helm-dired-history helm-descbinds helm-company helm-clojuredocs helm-ag hardcore-mode go-mode github-browse-file git-timemachine git-rebase-mode git-commit-mode flyspell-lazy flycheck-tip flycheck-pos-tip flycheck-joker flycheck-cython flycheck-color-mode-line flycheck-clojure flycheck-cask fic-mode expand-region exec-path-from-shell enh-ruby-mode emoji-cheat-sheet-plus elisp-slime-nav easy-kill discover diff-hl cpputils-cmake counsel company-web company-jedi cmake-mode clojure-mode-extra-font-locking clojure-cheatsheet cljsbuild-mode cider-eval-sexp-fu cask-mode cask browse-at-remote better-defaults avy anzu aggressive-indent)))
+    (cljr-helm clj-refactor feature-mode helm-git flycheck-haskell smart-parens magithub zenburn-theme yaml-mode which-key web-mode volatile-highlights use-package undo-tree toml-mode tagedit swiper-helm sql-indent spacemacs-theme smex smart-mode-line shell-pop scala-mode rust-mode rainbow-mode rainbow-delimiters pytest pt popwin neotree move-text markdown-mode magit-annex kibit-helper json-mode js2-mode jedi inf-ruby imenu-anywhere ido-ubiquitous hl-todo hl-sexp highlight-symbol highlight-parentheses helm-swoop helm-projectile helm-flycheck helm-dired-recent-dirs helm-dired-history helm-descbinds helm-company helm-clojuredocs helm-ag hardcore-mode go-mode github-browse-file git-timemachine git-rebase-mode git-commit-mode flyspell-lazy flycheck-tip flycheck-pos-tip flycheck-joker flycheck-cython flycheck-color-mode-line flycheck-clojure flycheck-cask fic-mode expand-region exec-path-from-shell enh-ruby-mode emoji-cheat-sheet-plus elisp-slime-nav easy-kill discover diff-hl cpputils-cmake counsel company-web company-jedi cmake-mode clojure-mode-extra-font-locking clojure-cheatsheet cljsbuild-mode cider-eval-sexp-fu cask-mode cask browse-at-remote better-defaults avy anzu aggressive-indent)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(projectile-completion-system (quote helm))
  '(projectile-globally-ignored-directories
@@ -456,7 +456,6 @@ re-downloaded in order to locate PACKAGE."
 (use-package cider
   :ensure t
   :config
-  (setq cljr-inject-dependencies-at-jack-in nil)
   (setq nrepl-log-messages t)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
@@ -464,6 +463,14 @@ re-downloaded in order to locate PACKAGE."
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
 ;; Clj-refactor causes problems as cider brings it in
+(use-package clj-refactor
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'clj-refactor-mode)
+  :config
+  ;; Configure the Clojure Refactoring prefix:
+  (cljr-add-keybindings-with-prefix "C-c .")
+  :diminish clj-refactor-mode)
 
 (use-package cljsbuild-mode
   :ensure t)
@@ -567,6 +574,7 @@ re-downloaded in order to locate PACKAGE."
   (global-unset-key (kbd "C-x c"))
   (require 'helm-config)
 
+  ;; These do not sem to take effect
   (global-set-key (kbd "C-c M-x")     'execute-extended-command) ; old M-x
   (global-set-key (kbd "C-x C-d")     'helm-browse-project)
   (global-set-key (kbd "C-h C-f")     'helm-apropos)
@@ -576,7 +584,7 @@ re-downloaded in order to locate PACKAGE."
   (global-set-key (kbd "C-,")         'helm-calcul-expression)
   (global-set-key (kbd "C-x C-b")     'helm-buffers-list)
   (global-set-key (kbd "C-c f")       'helm-recentf)
-  ;;  (global-set-key (kbd "C-x C-f")     'helm-find-files)
+  ;; (global-set-key (kbd "C-x C-f")     'helm-find-files)
   (global-set-key (kbd "M-x")         'helm-M-x)
   (global-set-key (kbd "M-y")         'helm-show-kill-ring)
   (global-set-key (kbd "C-c i")       'helm-imenu)
@@ -920,12 +928,14 @@ re-downloaded in order to locate PACKAGE."
 (toggle-scroll-bar -1)
 
 (require 'cider-eldoc)
-;;(require 'clj-refactor)
 
 ;; helm
 (require 'helm-config)
+
 ;;cljr-helm
-;;(require 'cljr-helm)
+(use-package cljr-helm
+  :ensure t)
+
 ;; global set helm
 (global-set-key (kbd "M-x") 'helm-M-x)
 
@@ -941,13 +951,13 @@ re-downloaded in order to locate PACKAGE."
           (lambda ()
             (setq-local cider-repl-use-pretty-printing t)
             (local-set-key [f5] 'helm-imenu)
-            ;;          (local-set-key [f6] 'cljr-helm)
+            (local-set-key [f6] 'cljr-helm)
             (local-set-key (kbd "<C-f5>") 'cider-test-run-test)
             (cider-auto-test-mode t)))
 
 (add-hook 'cider-repl-mode-hook
           (lambda ()
-            ;;        (local-set-key [f6] 'cljr-helm)
+            (local-set-key [f6] 'cljr-helm)
             ))
 
 (provide 'ca-clojure)
