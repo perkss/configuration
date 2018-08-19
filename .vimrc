@@ -31,8 +31,6 @@ set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 
 " move to beginning/end of line
-nnoremap B ^
-nnoremap E $
 
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
