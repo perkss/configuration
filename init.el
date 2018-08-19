@@ -461,10 +461,7 @@ re-downloaded in order to locate PACKAGE."
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
-(use-package clojure-cheatsheet
-  :ensure t)
-
-;; Clj-refacotr causes problems as cider brings it in
+;; Clj-refactor causes problems as cider brings it in
 
 (use-package cljsbuild-mode
   :ensure t)
@@ -692,6 +689,17 @@ re-downloaded in order to locate PACKAGE."
 (use-package cider-eval-sexp-fu
   :ensure t)
 
+(use-package crosshairs
+  :bind ("M-o c" . crosshairs-mode))
+
+(use-package crux
+  :bind ("C-c e i" . crux-find-user-init-file))
+
+(use-package css-mode
+  :mode "\\.css\\'")
+
+(use-package csv-mode
+  :mode "\\.csv\\'")
 
 (use-package ivy
   :ensure t
@@ -709,6 +717,15 @@ re-downloaded in order to locate PACKAGE."
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
+(use-package diff-hl-flydiff
+  :commands diff-hl-flydiff-mode)
+
+(use-package diff-mode
+  :commands diff-mode)
+
+(use-package diffview
+  :commands (diffview-current diffview-region diffview-message))
 
 (use-package which-key
   :ensure t
@@ -750,6 +767,36 @@ re-downloaded in order to locate PACKAGE."
   (global-set-key (kbd "C-c k") 'counsel-ag)
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+
+(use-package counsel-dash
+  :bind ("C-c C-h" . counsel-dash))
+
+(use-package counsel-gtags
+  ;; jww (2017-12-10): Need to configure.
+  :disabled t
+  :after counsel)
+
+(use-package counsel-osx-app
+  :bind* ("S-M-SPC" . counsel-osx-app)
+  :commands counsel-osx-app
+  :config
+  (setq counsel-osx-app-location
+        (list "/Applications"
+              "/Applications/Misc"
+              "/Applications/Utilities"
+              (expand-file-name "~/Applications")
+              (expand-file-name "~/.nix-profile/Applications")
+              "/Applications/Xcode.app/Contents/Applications")))
+
+(use-package counsel-projectile
+  :after (counsel projectile)
+  :config
+  (counsel-projectile-mode)
+  (define-key projectile-mode-map [remap projectile-ag]
+    #'counsel-projectile-rg))
+
+(use-package counsel-tramp
+  :commands counsel-tramp)
 
 ;; temporarily highlight changes from yanking, etc
 (use-package volatile-highlights
