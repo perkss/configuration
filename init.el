@@ -13,6 +13,10 @@
 ;; don't use tabs for indent
 (setq-default indent-tabs-mode nil)
 
+(eval-and-compile
+  (defun emacs-path (path)
+    (expand-file-name path user-emacs-directory)))
+
 ;; emacs package management
 ;; use MELPA stable
 (require 'package)
@@ -831,6 +835,35 @@ re-downloaded in order to locate PACKAGE."
   (global-set-key [f3] 'highlight-symbol-next)
   (global-set-key [(shift f3)] 'highlight-symbol-prev)
   (global-set-key [(meta f3)] 'highlight-symbol-query-replace))
+
+(use-package auto-yasnippet
+  :after yasnippet
+  :bind (("C-c y a" . aya-create)
+         ("C-c y e" . aya-expand)
+         ("C-c y o" . aya-open-line)))
+
+(use-package yasnippet
+  :demand t
+  :diminish yas-minor-mode
+  :bind (("C-c y d" . yas-load-directory)
+         ("C-c y i" . yas-insert-snippet)
+         ("C-c y f" . yas-visit-snippet-file)
+         ("C-c y n" . yas-new-snippet)
+         ("C-c y t" . yas-tryout-snippet)
+         ("C-c y l" . yas-describe-tables)
+         ("C-c y g" . yas/global-mode)
+         ("C-c y m" . yas/minor-mode)
+         ("C-c y a" . yas-reload-all)
+         ("C-c y x" . yas-expand))
+  :bind (:map yas-keymap
+              ("C-i" . yas-next-field-or-maybe-expand))
+  :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
+  :config
+  (yas-load-directory (emacs-path "snippets"))
+  (yas-global-mode 1))
+
+
+
 
 
 ;; Yaml mode support
