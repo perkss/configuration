@@ -560,13 +560,18 @@ re-downloaded in order to locate PACKAGE."
   :config
   (add-hook 'git-commit-mode-hook 'flyspell-mode))
 
-
-
 (use-package flycheck-tip
   :ensure t)
 
 ;; This disables the arrow keys
 ;; use-package hardcore-mode
+(use-package hardcore-mode
+  :ensure t
+  :init
+  (setq too-hardcore-backspace t)
+  (setq too-hardcore-return t)
+  :config
+  (global-hardcore-mode))
 
 (use-package helm
   :ensure t
@@ -1034,11 +1039,9 @@ re-downloaded in order to locate PACKAGE."
  kept-old-versions 2
  version-control t)       ; use versioned backups
 
- (setq backup-directory-alist
-       `(("." . ,(concat user-emacs-directory "backups"))))
 
 
-; revert buffers automatically when underlying files are changed externally
+                                        ; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
 
 (setq cljr-inject-dependencies-at-jack-in nil)
