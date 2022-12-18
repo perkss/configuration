@@ -571,9 +571,9 @@ the .elc exists. Also discard .elc without corresponding .el"
   (global-set-key (kbd "M-y")         'helm-show-kill-ring)
   (global-set-key (kbd "C-c i")       'helm-imenu)
   (global-set-key (kbd "C-x b")       'helm-mini)
-  ;;  (global-set-key (kbd "C-x C-f")     'helm-find-files)
+  (global-set-key (kbd "C-x C-f")     'helm-find-files)
   (global-set-key (kbd "C-c h o")     'helm-occur)
-
+  (global-set-key (kbd "C-x C-f") #'helm-find-files)
   (define-key global-map [remap jump-to-register]      'helm-register)
   (define-key global-map [remap list-buffers]          'helm-buffers-list)
   (define-key global-map [remap dabbrev-expand]        'helm-dabbrev)
@@ -1106,7 +1106,7 @@ the .elc exists. Also discard .elc without corresponding .el"
   :bind ("C-c C-h" . counsel-dash))
 
 (use-package counsel-gtags
-  ;; jww (2017-12-10): Need to configure.
+
   :disabled t
   :after counsel)
 
