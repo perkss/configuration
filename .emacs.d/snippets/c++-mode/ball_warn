@@ -1,6 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: BALL WARN
-# key: warn
-# binding: direct-keybinding
-# --
-BALL_LOG_WARN << "$0";

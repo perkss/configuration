@@ -1,6 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: BALL INFO
-# key: info
-# binding: direct-keybinding
-# --
-BALL_LOG_INFO << "$0";
