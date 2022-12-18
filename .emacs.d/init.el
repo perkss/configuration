@@ -320,6 +320,25 @@ the .elc exists. Also discard .elc without corresponding .el"
 (use-package init-yasnippet :ensure nil :if exordium-yasnippet)
 (use-package init-gdb :ensure nil)
 
+;; NeoTree Side project explorer
+(use-package neotree
+  :ensure t
+  :straight (neotree
+             :type git
+             :host github
+             :repo "jaypei/emacs-neotree"
+             :branch "dev")
+  :custom
+  (neo-window-fixed-size nil)
+  (neo-fit-to-contents t)
+  (neo-theme 'icons)
+  (neo-autorefresh nil)
+  (neo-vc-integration '(face))
+  :bind (([f3] . 'my/neotree-toggle)
+         :map neotree-mode-map
+         ("C-w l" . 'evil-window-right)
+         ("C-c C-h" . 'neotree-hidden-file-toggle)
+         ("C-c C-r" . 'neotree-rename-node)))
 
 ;;; RTags
 (use-package init-rtags :ensure nil)
