@@ -334,11 +334,16 @@ the .elc exists. Also discard .elc without corresponding .el"
   :ensure t
   ;; defer loading after 1 second to speed startup
   :defer 1
+  :hook (c++-mode . rtags-start-process-unless-running)
   :config
   (message "Loaded rtags")
   (setq rtags-autostart-diagnostics t)
   ;; use standard C-c r <key> keybindings
   (rtags-enable-standard-keybindings))
+
+(setq rtags-display-result-backend 'helm)
+
+
 
 (use-package company-rtags
   :ensure t
