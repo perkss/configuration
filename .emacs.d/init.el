@@ -1278,7 +1278,7 @@ the .elc exists. Also discard .elc without corresponding .el"
 (use-package helm-clojuredocs
   :ensure t)
 
-
+(update-progress-bar)
 (show-paren-mode)
 
 ;; Magit for git
@@ -1319,7 +1319,20 @@ the .elc exists. Also discard .elc without corresponding .el"
             ;; Buffer local hook.
             t))
 
+(update-progress-bar)
+
 ;; Run this for each mode you want to use the hook.
 (add-hook 'c-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
 (add-hook 'c++-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
 (add-hook 'glsl-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
+
+(use-package cmake-project)
+
+(defun maybe-cmake-project-mode ()
+  (if (or (file-exists-p "CMakeLists.txt")
+          (file-exists-p
+             (expand-file-name "CMakeLists.txt" (car (project-roots (project-current))))))
+      (cmake-project-mode)))
+
+(add-hook 'c-mode-hook 'maybe-cmake-project-mode)
+(add-hook 'c++-mode-hook 'maybe-cmake-project-mode)
