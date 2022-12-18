@@ -330,6 +330,16 @@ the .elc exists. Also discard .elc without corresponding .el"
 (use-package init-rtags-cmake :ensure nil)
 (use-package init-rtags-cdb :ensure nil)
 
+;; ensure that we use only rtags checking
+;; https://github.com/Andersbakken/rtags#optional-1
+(defun setup-flycheck-rtags ()
+  (interactive)
+  (flycheck-select-checker 'rtags)
+  ;; RTags creates more accurate overlays.
+  (setq-local flycheck-highlighting-mode nil)
+  (setq-local flycheck-check-syntax-automatically nil))
+
+
 (use-package rtags
   :ensure t
   ;; defer loading after 1 second to speed startup
