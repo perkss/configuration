@@ -1341,7 +1341,15 @@ the .elc exists. Also discard .elc without corresponding .el"
 (global-auto-revert-mode t)
 
 (setq cljr-inject-dependencies-at-jack-in nil)
-
+;;; Typescript
+(use-package typescript-mode
+  :ensure t
+  :init
+  (add-hook 'typescript-mode-hook
+            (lambda ()
+              (setq tab-width 2)
+              (setq typescript-indent-level tab-width)
+              (setq evil-shift-width typescript-indent-level))))
 (use-package spacemacs-common
   :ensure spacemacs-theme
   :init
