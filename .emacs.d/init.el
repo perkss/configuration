@@ -608,9 +608,6 @@ the .elc exists. Also discard .elc without corresponding .el"
   :config
   (add-hook 'prog-mode-hook #'rainbow-mode))
 
-(use-package magit
-  :ensure t)
-
 (use-package magit-annex
   :ensure t)
 
@@ -747,6 +744,24 @@ the .elc exists. Also discard .elc without corresponding .el"
   :ensure t
   :config
   (global-set-key "\C-s" 'swiper))
+
+
+    ;; web-mode: An autonomous emacs major-mode for editing web templates.
+;; http://web-mode.org/
+(use-package web-mode
+  :defer t
+  :init
+  (setq
+   web-mode-code-indent-offset 2
+   web-mode-comment-style 2
+   web-mode-css-indent-offset 2
+   web-mode-enable-current-element-highlight t
+   web-mode-enable-current-column-highlight t
+   web-mode-markup-indent-offset 2)
+  :mode
+  ("\\.erb\\'" . web-mode)
+  ("\\.html?\\'" . web-mode)
+  ("\\.tpl\\'" . web-mode))
 
 (use-package swiper-helm
   :ensure t)
