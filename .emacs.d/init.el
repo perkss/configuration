@@ -819,8 +819,9 @@ the .elc exists. Also discard .elc without corresponding .el"
          ("C-c y e" . aya-expand)
          ("C-c y o" . aya-open-line)))
 
-
-
+;; Useful snippets
+(use-package yasnippet-snippets
+  :ensure t)
 
 
 
@@ -1070,12 +1071,6 @@ the .elc exists. Also discard .elc without corresponding .el"
   (global-set-key [f3] 'highlight-symbol-next)
   (global-set-key [(shift f3)] 'highlight-symbol-prev)
   (global-set-key [(meta f3)] 'highlight-symbol-query-replace))
-
-(use-package auto-yasnippet
-  :after yasnippet
-  :bind (("C-c y a" . aya-create)
-         ("C-c y e" . aya-expand)
-         ("C-c y o" . aya-open-line)))
 
 
 ;; Yaml mode support
