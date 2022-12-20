@@ -6,6 +6,15 @@ Install
 
 https://vxlabs.com/2016/04/11/step-by-step-guide-to-c-navigation-and-completion-with-emacs-and-the-clang-based-rtags/
 
+
+brew install the_silver_searcher
+
+brew install rg
+
+brew install ispell
+
+
+
 ;;; Files
 ;;; =====
 ;;; Rtags uses the following files:
