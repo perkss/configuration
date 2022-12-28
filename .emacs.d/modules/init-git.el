@@ -24,6 +24,15 @@
 (define-prefix-command 'exordium-git-map nil)
 (global-set-key (kbd "C-c g") 'exordium-git-map)
 
+(use-package git-commit
+  :ensure t
+  :config
+  (add-hook 'git-commit-mode-hook 'flyspell-mode))
+
+
+(use-package magit-annex
+  :ensure t)
+
 (use-package magit
   :init
   (defun exordium-magit-log-buffer ()

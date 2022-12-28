@@ -464,158 +464,22 @@ the .elc exists. Also discard .elc without corresponding .el"
 ;; highlight the current line
 (global-hl-line-mode +1)
 
-;; custom variables
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
- '(backup-directory-alist (quote (("." . "~/.emacs.d/backups"))))
- '(cider-lein-parameters "with-profile +test repl :headless")
- '(cider-repl-display-help-banner nil)
- '(cider-repl-use-pretty-printing t)
- '(company-quickhelp-color-background "#4F4F4F")
- '(company-quickhelp-color-foreground "#DCDCCC")
- '(custom-enabled-themes nil)
- '(custom-safe-themes
-   (quote
-    ("138d69908243e827e869330c43e7abc0f70f334dfa90a589e4d8a1f98a1e29af" default)))
- '(fci-rule-color "#383838")
- '(flycheck-disabled-checkers
-   (quote
-    (emacs-lisp-checkdoc ruby-rubylint clojure-cider-typed clojure-cider-eastwood clojure-cider-kibit)))
- '(helm-adaptive-history-file "~/.emacs.d/helm-history")
- '(helm-ff-file-name-history-use-recentf t)
- '(helm-ff-transformer-show-only-basename nil)
- '(helm-move-to-line-cycle-in-source t)
- '(helm-scroll-amount 8)
- '(helm-split-window-in-side-p t)
- '(helm-split-window-inside-p t)
- '(imenu-auto-rescan t)
- '(nrepl-message-colors
-   (quote
-    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
- '(package-selected-packages
-   (quote
-    (rjsx-mode pry robe cljr-helm clj-refactor feature-mode helm-git flycheck-haskell smart-parens magithub zenburn-theme yaml-mode which-key web-mode volatile-highlights use-package undo-tree toml-mode tagedit swiper-helm sql-indent spacemacs-theme smex smart-mode-line shell-pop scala-mode rust-mode rainbow-mode rainbow-delimiters pytest pt popwin neotree move-text markdown-mode magit-annex kibit-helper json-mode js2-mode jedi inf-ruby imenu-anywhere ido-ubiquitous hl-todo hl-sexp highlight-symbol highlight-parentheses helm-swoop helm-projectile helm-flycheck helm-dired-recent-dirs helm-dired-history helm-descbinds helm-company helm-clojuredocs helm-ag hardcore-mode go-mode github-browse-file git-timemachine git-rebase-mode git-commit-mode flyspell-lazy flycheck-tip flycheck-pos-tip flycheck-joker flycheck-cython flycheck-color-mode-line flycheck-clojure flycheck-cask fic-mode expand-region exec-path-from-shell enh-ruby-mode emoji-cheat-sheet-plus elisp-slime-nav easy-kill discover diff-hl cpputils-cmake counsel company-web company-jedi cmake-mode clojure-mode-extra-font-locking clojure-cheatsheet cljsbuild-mode cider-eval-sexp-fu cask-mode cask browse-at-remote better-defaults avy anzu aggressive-indent)))
- '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
- '(projectile-completion-system (quote helm))
- '(projectile-globally-ignored-directories
-   (quote
-    (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "Godeps")))
- '(safe-local-variable-values
-   (quote
-    ((scss-mode
-      (css-indent-offset . 2))
-     (eval cider-register-cljs-repl-type
-           (quote figwheel+integrant)
-           "(do (require 'figwheel-sidecar.repl-api)
-              (require 'integrant.repl)
-              (integrant.repl/go)
-              (figwheel-sidecar.repl-api/cljs-repl))")
-     (eval cider-register-cljs-repl-type
-           (quote figwheel+integrant)
-           "(do (require 'figwheel-sidecar.repl-api)
-               (require 'integrant.repl)
-               (integrant.repl/go)
-               (figwheel-sidecar.repl-api/cljs-repl))")
-     (cider-default-cljs-repl . figwheel+integrant))))
- '(vc-annotate-background "#2B2B2B")
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#BC8383")
-     (40 . "#CC9393")
-     (60 . "#DFAF8F")
-     (80 . "#D0BF8F")
-     (100 . "#E0CF9F")
-     (120 . "#F0DFAF")
-     (140 . "#5F7F5F")
-     (160 . "#7F9F7F")
-     (180 . "#8FB28F")
-     (200 . "#9FC59F")
-     (220 . "#AFD8AF")
-     (240 . "#BFEBBF")
-     (260 . "#93E0E3")
-     (280 . "#6CA0A3")
-     (300 . "#7CB8BB")
-     (320 . "#8CD0D3")
-     (340 . "#94BFF3")
-     (360 . "#DC8CC3"))))
- '(vc-annotate-very-old-color "#DC8CC3"))
-
-
-
-
-
-(use-package helm-clojuredocs
-  :ensure t)
-
-(use-package helm-company
-  :ensure t)
-
-(use-package helm-dired-history
-  :ensure t)
-
-(use-package helm-dired-recent-dirs
-  :ensure t)
-
-(use-package helm-flycheck
-  :ensure t)
-
-(use-package cmake-mode
-  :ensure t)
-
-(use-package helm-flycheck
-  :ensure t
-  :config
-  (eval-after-load 'flycheck
-    '(define-key flycheck-mode-map (kbd "C-c ! h") 'helm-flycheck)))
-
-(use-package helm-swoop
-  :ensure t
-  :config
-  (global-set-key (kbd "C-c o") 'helm-swoop))
-
-
-(use-package highlight-symbol
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook 'highlight-symbol-mode)
-  (global-set-key [(control f3)] 'highlight-symbol)
-  (global-set-key [f3] 'highlight-symbol-next)
-  (global-set-key [(shift f3)] 'highlight-symbol-prev)
-  (global-set-key [(meta f3)] 'highlight-symbol-query-replace))
-
-
 (use-package hl-todo
   :ensure t
   :config
   (global-hl-todo-mode))
 
-(use-package git-timemachine
-  :ensure t
-  :bind (("s-g" . git-timemachine)))
 
-(use-package rainbow-delimiters
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package rainbow-mode
   :ensure t
   :config
   (add-hook 'prog-mode-hook #'rainbow-mode))
 
-(use-package magit-annex
-  :ensure t)
-
-(use-package magithub
-  :ensure t)
 
 (use-package json-mode
   :ensure t)
+
 (use-package ag
   :ensure t)
 
@@ -654,10 +518,6 @@ the .elc exists. Also discard .elc without corresponding .el"
 (use-package diffview
   :commands (diffview-current diffview-region diffview-message))
 
-(use-package which-key
-  :ensure t
-  :config
-  (which-key-mode +1))
 
 (use-package imenu-anywhere
   :ensure t
@@ -685,13 +545,6 @@ the .elc exists. Also discard .elc without corresponding .el"
   (setq avy-background t))
 
 
-(use-package pt
-  :ensure t)
-
-(use-package expand-region
-  :ensure t
-  :bind ("C-=" . er/expand-region))
-
 (use-package savehist
   :config
   (setq savehist-additional-variables
@@ -703,16 +556,6 @@ the .elc exists. Also discard .elc without corresponding .el"
         savehist-file (expand-file-name "savehist" savefile-dir))
   (savehist-mode +1))
 
-(use-package recentf
-  :config
-  (setq recentf-save-file (expand-file-name "recentf" savefile-dir)
-        recentf-max-saved-items 500
-        recentf-max-menu-items 15
-        ;; disable recentf-cleanup on Emacs start, because it can cause
-        ;; problems with remote files
-        recentf-auto-cleanup 'never)
-  (recentf-mode +1))
-
 (use-package anzu
   :ensure t
   :bind (("M-%" . anzu-query-replace)
@@ -720,8 +563,6 @@ the .elc exists. Also discard .elc without corresponding .el"
   :config
   (global-anzu-mode))
 
-(use-package better-defaults
-  :ensure t)
 
 (use-package undo-tree
   :ensure t
@@ -766,51 +607,7 @@ the .elc exists. Also discard .elc without corresponding .el"
 (use-package swiper-helm
   :ensure t)
 
-(use-package counsel
-  :ensure t
-  :config
-  (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
-  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-  (global-set-key (kbd "<f1> l") 'counsel-find-library)
-  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-  (global-set-key (kbd "C-c g") 'counsel-git)
-  (global-set-key (kbd "C-c j") 'counsel-git-grep)
-  (global-set-key (kbd "C-c k") 'counsel-ag)
-  (global-set-key (kbd "C-x l") 'counsel-locate)
-  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
-(use-package counsel-dash
-  :bind ("C-c C-h" . counsel-dash))
-
-(use-package counsel-gtags
-  ;; jww (2017-12-10): Need to configure.
-  :disabled t
-  :after counsel)
-
-(use-package counsel-osx-app
-  :bind* ("S-M-SPC" . counsel-osx-app)
-  :commands counsel-osx-app
-  :config
-  (setq counsel-osx-app-location
-        (list "/Applications"
-              "/Applications/Misc"
-              "/Applications/Utilities"
-              (expand-file-name "~/Applications")
-              (expand-file-name "~/.nix-profile/Applications")
-              "/Applications/Xcode.app/Contents/Applications")))
-
-(use-package counsel-projectile
-  :ensure t
-  :config
-  (counsel-projectile-mode)
-  (define-key projectile-mode-map [remap projectile-ag]
-    #'counsel-projectile-rg))
-
-(use-package counsel-tramp
-  :commands counsel-tramp)
 
 ;; temporarily highlight changes from yanking, etc
 (use-package volatile-highlights
@@ -818,98 +615,9 @@ the .elc exists. Also discard .elc without corresponding .el"
   :config
   (volatile-highlights-mode +1))
 
-
-
-;; Javascript
-
-;;
-(use-package highlight-symbol
-  :ensure t
-  :config
-  (highlight-symbol-mode t)
-  (add-hook 'prog-mode-hook 'highlight-symbol-mode)
-  (global-set-key [(control f3)] 'highlight-symbol)
-  (global-set-key [f3] 'highlight-symbol-next)
-  (global-set-key [(shift f3)] 'highlight-symbol-prev)
-  (global-set-key [(meta f3)] 'highlight-symbol-query-replace))
-
-(use-package auto-yasnippet
-  :after yasnippet
-  :bind (("C-c y a" . aya-create)
-         ("C-c y e" . aya-expand)
-         ("C-c y o" . aya-open-line)))
-
-;; Useful snippets
-(use-package yasnippet-snippets
-  :ensure t)
-
-
-
-
-;; Yaml mode support
-(use-package yaml-mode
-  :ensure t
-  :mode "\\.yaml\\'")
-
-;; Ruby
-(use-package inf-ruby
-  :ensure t
-  :config
-  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
-
-(use-package ruby-mode
-  :config
-  (add-hook 'ruby-mode-hook #'subword-mode))
-
-(use-package robe
-  :ensure t
-  :config
-  (add-hook 'ruby-mode-hook 'robe-mode))
-
-
-(use-package rjsx-mode
-  :ensure t)
-
-;; Rust
-(use-package rust-mode
-  :mode "\\.rs\\'"
-  :config
-  (add-hook 'rust-mode-hook 'racer-mode)
-  (add-hook 'racer-mode-hook 'eldoc-mode)
-  (add-hook 'rust-mode-hook 'company-mode)
-  (add-hook 'rust-mode-hook 'flycheck-mode)
-  (setq company-tooltip-align-annotations t))
-
-(use-package sql-indent
-  :ensure t)
-
-(use-package github-browse-file
-  :ensure t)
-
-;; Python
-(use-package jedi
-  :ensure t)
-
-(use-package pytest
-  :ensure t)
-
-(use-package company-jedi
-  :ensure t)
-
 (use-package flycheck-haskell
   :ensure t)
 
-(use-package helm-dired-recent-dirs
-  :ensure t)
-
-(use-package helm-dired-history
-  :ensure t)
-
-(use-package helm-company
-  :ensure t)
-
-(use-package helm-clojuredocs
-  :ensure t)
 
 (use-package hardcore-mode
   :ensure t
@@ -936,15 +644,6 @@ the .elc exists. Also discard .elc without corresponding .el"
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook #'elisp-slime-nav-mode)))
 
-(use-package paredit
-  :ensure t
-  :config
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  ;; enable in the *scratch* buffer
-  (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
-  (add-hook 'ielm-mode-hook #'paredit-mode)
-  (add-hook 'lisp-mode-hook #'paredit-mode)
-  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
 
 (use-package paren
   :config
@@ -960,6 +659,7 @@ the .elc exists. Also discard .elc without corresponding .el"
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
+
 (use-package exec-path-from-shell
   :ensure t
   :config
@@ -972,11 +672,6 @@ the .elc exists. Also discard .elc without corresponding .el"
   (([(meta shift up)] . move-text-up)
    ([(meta shift down)] . move-text-down)))
 
-(use-package markdown-mode
-  :ensure t)
-
-(use-package yaml-mode
-  :ensure t)
 
 (use-package whitespace
   :init
@@ -989,50 +684,10 @@ the .elc exists. Also discard .elc without corresponding .el"
 
 
 
-(use-package clojure-mode
-  :ensure t
-  :config
-  (add-hook 'clojure-mode-hook #'paredit-mode)
-  (add-hook 'clojure-mode-hook #'subword-mode)
-  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
 
-(use-package cider
-  :ensure t
-  :config
-  (setq nrepl-log-messages t)
-  (add-hook 'cider-mode-hook #'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook #'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook #'paredit-mode)
-  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
-;; Clj-refactor causes problems as cider brings it in
-(use-package clj-refactor
-  :ensure t
-  :init
-  (add-hook 'clojure-mode-hook 'clj-refactor-mode)
-  :config
-  ;; Configure the Clojure Refactoring prefix:
-  (cljr-add-keybindings-with-prefix "C-c .")
-  :diminish clj-refactor-mode)
 
-(use-package cljsbuild-mode
-  :ensure t)
 
-(use-package company
-  :ensure t
-  :config
-  (setq company-idle-delay 0.5)
-  (setq company-show-numbers t)
-  (setq company-tooltip-limit 10)
-  (setq company-minimum-prefix-length 2)
-  (setq company-tooltip-align-annotations t)
-  ;; invert the navigation direction if the the completion popup-isearch-match
-  ;; is displayed on top (happens near the bottom of windows)
-  (setq company-tooltip-flip-when-above t)
-  (global-company-mode))
-
-(use-package company-jedi
-  :ensure t)
 
 (use-package counsel
   :ensure t
@@ -1157,110 +812,9 @@ the .elc exists. Also discard .elc without corresponding .el"
 (use-package company-jedi
   :ensure t)
 
-(use-package flycheck
-  :ensure t
-  :commands (flycheck-mode
-             flycheck-next-error
-             flycheck-previous-error)
-  :init
-  (dolist (where '((emacs-lisp-mode-hook . emacs-lisp-mode-map)
-                   (haskell-mode-hook    . haskell-mode-map)
-                   (js2-mode-hook        . js2-mode-map)
-                   (c-mode-common-hook   . c-mode-base-map)))
-    (add-hook (car where)
-              `(lambda ()
-                 (bind-key "M-n" #'flycheck-next-error ,(cdr where))
-                 (bind-key "M-p" #'flycheck-previous-error ,(cdr where)))))
-  :config
-  (defalias 'show-error-at-point-soon
-    'flycheck-show-error-at-point)
-
-  (defun magnars/adjust-flycheck-automatic-syntax-eagerness ()
-    "Adjust how often we check for errors based on if there are any.
-  This lets us fix any errors as quickly as possible, but in a
-  clean buffer we're an order of magnitude laxer about checking."
-    (setq flycheck-idle-change-delay
-          (if flycheck-current-errors 0.3 3.0)))
-
-  ;; Each buffer gets its own idle-change-delay because of the
-  ;; buffer-sensitive adjustment above.
-  (make-variable-buffer-local 'flycheck-idle-change-delay)
-
-  (add-hook 'flycheck-after-syntax-check-hook
-            'magnars/adjust-flycheck-automatic-syntax-eagerness)
-
-  ;; Remove newline checks, since they would trigger an immediate check
-  ;; when we want the idle-change-delay to be in effect while editing.
-  (setq-default flycheck-check-syntax-automatically '(save
-                                                      idle-change
-                                                      mode-enabled))
-
- (defun flycheck-handle-idle-change ()
-    "Handle an expired idle time since the last change.
-  This is an overwritten version of the original
-  flycheck-handle-idle-change, which removes the forced deferred.
-  Timers should only trigger inbetween commands in a single
-  threaded system and the forced deferred makes errors never show
-  up before you execute another command."
-    (flycheck-clear-idle-change-timer)
-    (flycheck-buffer-automatically 'idle-change))
-  (add-hook 'after-init-hook #'global-flycheck-mode))
-
-(use-package flycheck-color-mode-line
-  :ensure t
-  :config
-  (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
-
-(use-package flycheck-pos-tip
-  :ensure t
-  :config
-  (eval-after-load 'flycheck
-    '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
-
-(use-package flycheck-joker
-  :ensure t)
-
-
-(use-package flycheck-clojure
-  :ensure t
-  :config
-  (eval-after-load 'flycheck '(flycheck-clojure-setup)))
-
-(use-package flycheck-cask
-  :ensure t)
-
-(use-package flyspell-lazy
-  :ensure t)
-
-(use-package flycheck-tip
-  :ensure t)
-
-(use-package git-commit
-  :ensure t
-  :config
-  (add-hook 'git-commit-mode-hook 'flyspell-mode))
-
-
-(use-package flycheck-haskell
-  :ensure t)
-
-(use-package helm-dired-recent-dirs
-  :ensure t)
-
-(use-package helm-dired-history
-  :ensure t)
-
-(use-package helm-company
-  :ensure t)
-
-(use-package helm-clojuredocs
-  :ensure t)
 
 (update-progress-bar)
 (show-paren-mode)
-
-;; Magit for git
-(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; Send backups and auto saves to direcotey
 (setq

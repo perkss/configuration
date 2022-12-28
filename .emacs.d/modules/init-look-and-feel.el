@@ -277,15 +277,6 @@
 (when exordium-delete-trailing-whitespace
   (global-delete-trailing-whitespace-mode t))
 
-;;; Disable backup files (e.g. file~)
-(defun no-backup-files ()
-  "Disable creation of backup files"
-  (interactive)
-  (setq make-backup-files nil))
-
-(unless exordium-backup-files
-  (no-backup-files))
-
 
 
 (provide 'init-look-and-feel)

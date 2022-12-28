@@ -11,11 +11,47 @@
 ;;;;   M-x cider-jack-in
 ;;;;   (Ignore the error when it starts). Use M-C-x to evaluate Clojure forms.
 ;;;;   C-c C-q to quit in the REPL (or use teh CIDER menu)
+(use-package clojure-mode
+  :ensure t
+  :config
+  (add-hook 'clojure-mode-hook #'paredit-mode)
+  (add-hook 'clojure-mode-hook #'subword-mode)
+  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
 
-(use-package clojure-mode)
-(use-package cider)
+(use-package cider
+  :ensure t
+  :config
+  (setq nrepl-log-messages t)
+  (add-hook 'cider-mode-hook #'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook #'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook #'paredit-mode)
+  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
+
+;; Clj-refactor causes problems as cider brings it in
+(use-package clj-refactor
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'clj-refactor-mode)
+  :config
+  ;; Configure the Clojure Refactoring prefix:
+  (cljr-add-keybindings-with-prefix "C-c .")
+  :diminish clj-refactor-mode)
+
+(use-package cljsbuild-mode
+  :ensure t)
+
+
 (use-package rainbow-delimiters)
-(use-package paredit)
+(use-package paredit
+  :ensure t
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  ;; enable in the *scratch* buffer
+  (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
+  (add-hook 'ielm-mode-hook #'paredit-mode)
+  (add-hook 'lisp-mode-hook #'paredit-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
+
 
 ;;; Env PATH
 (defun set-exec-path-for-lein ()

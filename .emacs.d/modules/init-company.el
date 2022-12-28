@@ -17,6 +17,8 @@
         ;; Key to force trigger company-complete
     :map global-map
         ("C-." . #'company-complete)))
+(use-package company-jedi
+  :ensure t)
 
 
 (use-package company-statistics

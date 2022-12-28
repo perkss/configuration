@@ -56,13 +56,6 @@
   (:map global-map
          ("C-h b". #'helm-descbinds)))
 
-(use-package helm-ag
-  :custom
-  (helm-ag-insert-at-point 'symbol)
-  :bind
-  (:map global-map
-        ("C-S-d" . #'helm-do-ag)
-        ("C-S-f" . #'helm-do-ag-this-file)))
 
 (use-package helm-ag
   :unless exordium-helm-projectile
@@ -86,6 +79,20 @@
         ("C-c C-k" . #'helm-swoop--edit-cancel)
         ("C-c C-q C-k" . #'helm-swoop--edit-delete-all-lines)))
 
+(use-package helm-company
+  :ensure t)
+
+(use-package helm-dired-history
+  :ensure t)
+
+(use-package helm-dired-recent-dirs
+  :ensure t)
+
+(use-package helm-flycheck
+  :ensure t
+  :config
+  (eval-after-load 'flycheck
+    '(define-key flycheck-mode-map (kbd "C-c ! h") 'helm-flycheck)))
 
 
 

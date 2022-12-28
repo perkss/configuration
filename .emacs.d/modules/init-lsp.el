@@ -17,6 +17,34 @@
 
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 (setq lsp-keymap-prefix exordium-lsp-keymap-prefix)
+(use-package flycheck-color-mode-line
+  :ensure t
+  :config
+  (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
+
+(use-package flycheck-pos-tip
+  :ensure t
+  :config
+  (eval-after-load 'flycheck
+    '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
+
+(use-package flycheck-joker
+  :ensure t)
+
+
+(use-package flycheck-clojure
+  :ensure t
+  :config
+  (eval-after-load 'flycheck '(flycheck-clojure-setup)))
+
+(use-package flycheck-cask
+  :ensure t)
+
+(use-package flyspell-lazy
+  :ensure t)
+
+(use-package flycheck-tip
+  :ensure t)
 
 (use-package lsp-mode
   :if exordium-lsp-mode-enable
@@ -108,6 +136,8 @@
   :config
   (which-key-mode))
 
+(use-package flycheck-haskell
+  :ensure t)
 
 ;; ;; Terrible hack working around off by one error between TRAMP and lsp-mode
 ;; (defun lsp--make-message@override (params)

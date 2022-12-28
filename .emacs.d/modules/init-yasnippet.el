@@ -37,4 +37,15 @@
 (defvar *bde-component-author* exordium-yasnippet-author
   "Default component author string for BDE headers")
 
+(use-package auto-yasnippet
+  :after yasnippet
+  :bind (("C-c y a" . aya-create)
+         ("C-c y e" . aya-expand)
+         ("C-c y o" . aya-open-line)))
+
+;; Useful snippets
+(use-package yasnippet-snippets
+  :ensure t)
+
+
 (provide 'init-yasnippet)
